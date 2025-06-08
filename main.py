@@ -1,27 +1,60 @@
 from tkinter import *
 from tkinter import messagebox
+from random import choice, shuffle, randint
+import random
+import pyperclip
 
 BG = "#EEEFE0"
 FG = "#641B2E"
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
+#Password Generator Project
+
 def generate_pw():
-    print("password generated")
-# Define the password length
-# Pw should be letters, numbers and signs (maybe insert a file that contains that
-# make a for loop and select random indexes from those lists
-# save it in a string
-# put the string into the label
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+               'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+               'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+    nr_letters = randint(8, 10)
+    nr_symbols = randint(2, 4)
+    nr_numbers = randint(2, 4)
+
+    # new_list = [new_item for item in list if test]
+
+    # for char in range(nr_letters):
+    #  password_list.append(random.choice(letters))
+
+    letters_list = [choice(letters) for char in range(0, nr_letters)]
+    symbol_list = [choice(symbols) for symbol in range(0, nr_symbols)]
+    numbers_list = [choice(numbers) for number in range(0, nr_numbers)]
+
+    # for char in range(nr_symbols):
+    #  password_list += random.choice(symbols)
+
+    # for char in range(nr_numbers):
+    #  password_list += random.choice(numbers)
+
+    password_list = letters_list + symbol_list + numbers_list
+
+    # password = [new item for char in password_list ]
+
+    #global password_list
+    random.shuffle(password_list)
+    password = "".join(password_list)
+    password_entry.config(password_entry.delete(0, END))
+    password_entry.insert(0, password)
+    pyperclip.copy(password)
+
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-
 # Create a file data.txt DONE
 # Use variables for the entries DONE
 # Decide a format for the file, I think csv would be great or key-value
 # go into write mode and write that file. Write a new line for each entry
 
 # Create a method and link it to the button add
-
 
 # ---------------------------- UI SETUP ------------------------------- #
 
