@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 BG = "#EEEFE0"
 FG = "#641B2E"
@@ -70,11 +71,24 @@ def add_pw():
     password = password_entry.get()
     email = email_entry.get()
     website = website_entry.get()
-    with open("data.txt", "a") as pw_file:
-        pw_file.write(f"{website}, {email}, {password}\n")
 
-    password_entry.delete(0, END)
-    website_entry.delete(0, END)
+    l_pw = len(password)
+    l_ws = len(website)
+    l_email = len(email)
+
+
+    if l_pw == 0:
+        messagebox.showinfo(title="Missing info", message = "You left the password field open.")
+    elif l_ws == 0:
+        messagebox.showinfo(title="Missing info", message="You left the website field open.")
+    else:
+        is_correct= messagebox.askokcancel(title="Correct input?", message=f"Are you sure your details are correct?\n \nEmail: {email} \n Website: {website} \nPassword: {password}")
+        if is_correct:
+            with open("data.txt", "a") as pw_file:
+                pw_file.write(f"{website}, {email}, {password}\n")
+
+            password_entry.delete(0, END)
+            website_entry.delete(0, END)
 
 # Buttons
 add_pw_button = Button()
