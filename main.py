@@ -1,8 +1,10 @@
+from json import JSONDecodeError
 from tkinter import *
 from tkinter import messagebox
 from random import choice, shuffle, randint
 import random
 import pyperclip
+import json
 
 BG = "#EEEFE0"
 FG = "#641B2E"
@@ -110,18 +112,52 @@ def add_pw():
     l_email = len(email)
 
 
+
     if l_pw == 0:
         messagebox.showinfo(title="Missing info", message = "You left the password field open.")
     elif l_ws == 0:
         messagebox.showinfo(title="Missing info", message="You left the website field open.")
     else:
-        is_correct= messagebox.askokcancel(title="Correct input?", message=f"Are you sure your details are correct?\n \nEmail: {email} \n Website: {website} \nPassword: {password}")
-        if is_correct:
-            with open("data.txt", "a") as pw_file:
-                pw_file.write(f"{website}, {email}, {password}\n")
+        # Try opening the file and loading the data
+        try:
+            with open("data.json", "r") as pw_file:
+                # If that file has some content
+                data = json.load(pw_file)
+            with open("data.json", "r") as pw_file:
+                # If that file has some content
+                data = json.load(pw_file)
+                new_data = {
+                    website: {
+                        "email:": email,
+                        "password:": password
+                    }
+                }
+                data.update(new_data)
+            with open("data.json", "w") as pw_file:
+                json.dump(data, pw_file, indent=4)
+        # If the file is empty
+        except JSONDecodeError:
+            with open("data.json", "w") as pw_file:
+                new_data = {
+                    website: {
+                        "email:": email,
+                        "password:": password
+                    }
+                }
+                json.dump(new_data, pw_file, indent = 4)
+        # If file does not exist yet
+        except FileNotFoundError:
+            with open("data.json", "w") as pw_file:
+                new_data = {
+                    website: {
+                        "email:": email,
+                        "password:": password
+                    }
+                }
+                json.dump(new_data, pw_file, indent = 4)
+        password_entry.delete(0, END)
+        website_entry.delete(0, END)
 
-            password_entry.delete(0, END)
-            website_entry.delete(0, END)
 
 # Buttons
 add_pw_button = Button()
