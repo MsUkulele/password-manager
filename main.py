@@ -58,9 +58,9 @@ def find_password():
         try:
             with open("data.json", "r") as pw_file:
                 data = json.load(pw_file)
-            print(data[website]["email:"])
-            print(data[website]["password:"])
-            messagebox.showinfo(title = "Your credentials", message = f"Your saved credentials for that website: \n Email: {data[website]["email:"]}\n Password: {data[website]["password:"]}")
+            email = data[website]["email:"]
+            password = data[website]["password:"]
+            messagebox.showinfo(title = "Your credentials", message = f"Your saved credentials for that website: \n Email: {email}\n Password: {password}")
         except FileNotFoundError:
             messagebox.showinfo(title = "ERROR", message = "Empty password file")
         except KeyError:
