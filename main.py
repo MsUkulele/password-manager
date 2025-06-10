@@ -50,7 +50,7 @@ def generate_pw():
     pyperclip.copy(password)
 
 
-def search():
+def find_password():
     website = website_entry.get()
     if len(website) == 0:
         messagebox.showinfo(title = "ERROR", message = "Please type in the website name")
@@ -108,7 +108,7 @@ website_entry.config(bg = BG, bd= 1, width = 21, fg = FG)
 website_entry.grid(row = 1, column = 1, columnspan = 1)
 
 gen_pw_button = Button()
-gen_pw_button.config(text = "Search", highlightthickness= 0, bg = BG, width = 10, command = search)
+gen_pw_button.config(text = "Search", highlightthickness= 0, bg = BG, width = 10, command = find_password)
 gen_pw_button.grid(row = 1, column = 2, columnspan=1)
 
 email_entry = Entry()
