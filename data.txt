@@ -1,4 +1,17 @@
+Next steps
 
-jerwerwe, example@gmail.com, 
-dsds, example@gmail.com, dsds
-gdgfgfg, example@gmail.com, fKk7(hO%L4k0+9#gL
+- Create a button Search in the right grid space
+- Add a command to it to a function "search"
+
+Function load
+trys
+- reads the data file into a file
+- loads the existing data file into a dict
+- looks for the inserted website in that dict
+- returns the email and the password for it in a messagebox
+- maybe puts the password copied in the clipboard
+
+except: if the file does not exist
+
+except: if the website does not exist in the file
+

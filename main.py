@@ -50,6 +50,23 @@ def generate_pw():
     pyperclip.copy(password)
 
 
+def search():
+    website = website_entry.get()
+    if len(website) == 0:
+        messagebox.showinfo(title = "ERROR", message = "Please type in the website name")
+    else:
+        try:
+            with open("data.json", "r") as pw_file:
+                data = json.load(pw_file)
+            print(data[website]["email:"])
+            print(data[website]["password:"])
+            messagebox.showinfo(title = "Your credentials", message = f"Your saved credentials for that website: \n Email: {data[website]["email:"]}\n Password: {data[website]["password:"]}")
+        except FileNotFoundError:
+            messagebox.showinfo(title = "ERROR", message = "Empty password file")
+        except KeyError:
+            messagebox.showinfo(title = "ERROR", message = f"There is no website named <{website}> in your file")
+
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 # Create a file data.txt DONE
 # Use variables for the entries DONE
@@ -86,10 +103,13 @@ password_label = Label()
 password_label.config(text = "Password:", bg = BG, fg = FG )
 password_label.grid(row = 3, column = 0)
 
-## Entries ##
 website_entry = Entry()
-website_entry.config(bg = BG, bd= 1, width = 35, fg = FG)
-website_entry.grid(row = 1, column = 1, columnspan = 2)
+website_entry.config(bg = BG, bd= 1, width = 21, fg = FG)
+website_entry.grid(row = 1, column = 1, columnspan = 1)
+
+gen_pw_button = Button()
+gen_pw_button.config(text = "Search", highlightthickness= 0, bg = BG, width = 10, command = search)
+gen_pw_button.grid(row = 1, column = 2, columnspan=1)
 
 email_entry = Entry()
 email_entry.config(bg = BG, bd= 1, width = 35, fg = FG)
@@ -155,8 +175,9 @@ def add_pw():
                     }
                 }
                 json.dump(new_data, pw_file, indent = 4)
-        password_entry.delete(0, END)
-        website_entry.delete(0, END)
+        finally:
+            password_entry.delete(0, END)
+            website_entry.delete(0, END)
 
 
 # Buttons
@@ -167,11 +188,6 @@ add_pw_button.grid(row = 4, column = 1, columnspan = 2)
 gen_pw_button = Button()
 gen_pw_button.config(text = "Generate Password", highlightthickness= 0, bg = BG, width = 10, command = generate_pw)
 gen_pw_button.grid(row = 3, column = 2, columnspan=1)
-
-
-
-
-
 
 
 window.mainloop()
