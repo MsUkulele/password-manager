@@ -53,19 +53,21 @@ def generate_pw():
 def find_password():
     website = website_entry.get()
     if len(website) == 0:
-        messagebox.showinfo(title = "ERROR", message = "Please type in the website name")
+        messagebox.showinfo(title = "ERROR", message = "Please type in a Website name.")
     else:
         try:
             with open("data.json", "r") as pw_file:
                 data = json.load(pw_file)
-            email = data[website]["email:"]
-            password = data[website]["password:"]
-            messagebox.showinfo(title = "Your credentials", message = f"Your saved credentials for that website: \n Email: {email}\n Password: {password}")
         except FileNotFoundError:
-            messagebox.showinfo(title = "ERROR", message = "Empty password file")
-        except KeyError:
-            messagebox.showinfo(title = "ERROR", message = f"There is no website named <{website}> in your file")
-
+            messagebox.showinfo(title = "ERROR", message = "No password file found.")
+        else:
+            if website in data:
+                email = data[website]["email:"]
+                password = data[website]["password:"]
+                messagebox.showinfo(title="Your credentials",
+                                message=f"Your saved credentials for that website: \n Email: {email}\n Password: {password}")
+            else:
+                messagebox.showinfo(title = "ERROR", message = f"No details for <{website}> exist.")
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 # Create a file data.txt DONE
